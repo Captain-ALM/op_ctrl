@@ -1,0 +1,17 @@
+update that library and add binary file loading capability
+allow referenced 'import' statements to be supported on auto compillation using the gac folder search (C:\WINDOWS\Microsoft.Net\assembly\GAC_MSIL)
+Function GetActiveUsers() As List(Of String)
+    Dim activeusers As New List(Of String)
+    Dim userskey As RegistryKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList")
+    For Each keyname As String In userskey.GetSubKeyNames()
+        Using key As RegistryKey = userskey.OpenSubKey(keyname)
+            Dim userpath As String = DirectCast(key.GetValue("ProfileImagePath"), String)
+            Dim username As String = System.IO.Path.GetFileNameWithoutExtension(userpath)
+            Dim useractive As Integer = 0
+            If key.GetValueNames.Contains("RefCount") Then useractive = DirectCast(key.GetValue("RefCount"), Integer)
+            If useractive <> 0 Then activeusers.Add(username)
+        End Using
+    Next
+    Return activeusers
+End Function
+https://social.msdn.microsoft.com/Forums/vstudio/en-US/35da8f4c-f5d8-47bf-936d-35a2fdff3c55/get-logged-in-user-from-a-list-of-users-on-remote-machine?forum=vbgeneral

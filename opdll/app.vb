@@ -1,0 +1,103 @@
+﻿Public Class app
+    Public Function startapp(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(args(0), args(1))
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function getapps(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Dim toret As String = ""
+                For Each current As Process In Process.GetProcesses()
+                    toret = toret & current.Id & " : " & current.ProcessName & ControlChars.CrLf
+                Next
+                Return toret
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function stopapp(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                For Each current As Process In Process.GetProcesses()
+                    If args(0) = current.Id Or args(0) = current.ProcessName Then
+                        current.CloseMainWindow()
+                    End If
+                Next
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function killapp(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                For Each current As Process In Process.GetProcesses()
+                    If args(0) = current.Id Or args(0) = current.ProcessName Then
+                        current.Kill()
+                    End If
+                Next
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappnoargs(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(args(0))
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappadminnoargs(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(New ProcessStartInfo(args(0)) With {.Verb = "runas"})
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappadmin(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(New ProcessStartInfo(args(0), args(1)) With {.Verb = "runas"})
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+End Class
