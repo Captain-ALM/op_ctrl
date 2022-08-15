@@ -101,3 +101,59 @@
         Return "FAILED"
     End Function
 End Class
+
+Public Class app_extended
+    Public Function startapphidden(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(New ProcessStartInfo(args(0), args(1)) With {.CreateNoWindow = True})
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappnoargshidden(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Process.Start(New ProcessStartInfo(args(0)) With {.CreateNoWindow = True})
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappandwait(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Dim p As Process = Process.Start(args(0), args(1))
+                p.WaitForExit()
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function startappnoargsandwait(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Dim p As Process = Process.Start(args(0))
+                p.WaitForExit()
+                Return "DONE"
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+End Class

@@ -6,13 +6,21 @@ Public Class config
     Public port As Integer = 9786
     Public buffer As Boolean = True
     Public interfaces As Dictionary(Of String, IPAddress)
+    Public pwd As String = "tor stinks"
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         combbxif.Enabled = False
         txtbxport.Enabled = False
+        chkbxbf.Enabled = False
+        txtbxpwd.Enabled = False
         selected_interface = interfaces(combbxif.SelectedItem.ToString)
         port = parseInteger(txtbxport.Text)
         buffer = chkbxbf.Checked
+        If txtbxpwd.Text = "" Then
+            pwd = "tor stinks"
+        Else
+            pwd = txtbxpwd.Text
+        End If
         If port > 65535 Then
             MsgBox("The Port you entered was too Big! The Port is now 65535.", MsgBoxStyle.Exclamation, "Information!")
             port = 65535
@@ -29,9 +37,11 @@ Public Class config
         combbxif.Enabled = False
         txtbxport.Enabled = False
         chkbxbf.Enabled = False
+        txtbxpwd.Enabled = False
         selected_interface = IPAddress.Any
         port = 9786
         buffer = True
+        pwd = "tor stinks"
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         Me.Close()
     End Sub
@@ -40,9 +50,11 @@ Public Class config
         combbxif.Enabled = False
         txtbxport.Enabled = False
         chkbxbf.Enabled = False
+        txtbxpwd.Enabled = False
         interfaces = getNetworkAdapterIPsAndNames()
         interfaces.Add("Listen on All Interfaces : 0.0.0.0", IPAddress.Any)
         txtbxport.Text = 9786
+        txtbxpwd.Text = "tor stinks"
         For Each current As String In interfaces.Keys
             combbxif.Items.Add(current)
         Next
@@ -51,5 +63,6 @@ Public Class config
         combbxif.Enabled = True
         txtbxport.Enabled = True
         chkbxbf.Enabled = True
+        txtbxpwd.Enabled = True
     End Sub
 End Class

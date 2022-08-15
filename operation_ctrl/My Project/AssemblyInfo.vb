@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("System Control Client")> 
 <Assembly: AssemblyCompany("HCALM")> 
 <Assembly: AssemblyProduct("op_ctrl_client")> 
-<Assembly: AssemblyCopyright("Copyright © HCALM 2017")> 
+<Assembly: AssemblyCopyright("Copyright © HCALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.1.1")> 
-<Assembly: AssemblyFileVersion("0.0.1.1")> 
+<Assembly: AssemblyVersion("0.0.1.2")> 
+<Assembly: AssemblyFileVersion("0.0.1.2")> 

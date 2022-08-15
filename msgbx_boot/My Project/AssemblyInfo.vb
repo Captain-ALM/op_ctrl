@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("msgbx_boot")> 
+<Assembly: AssemblyTitle("msgbx")> 
 <Assembly: AssemblyDescription("DLL")> 
 <Assembly: AssemblyCompany("HCALM")> 
 <Assembly: AssemblyProduct("msgbx_boot")> 
-<Assembly: AssemblyCopyright("Copyright © HCALM 2017")> 
+<Assembly: AssemblyCopyright("Copyright © HCALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.0.1")> 
-<Assembly: AssemblyFileVersion("0.0.0.1")> 
+<Assembly: AssemblyVersion("0.0.0.2")> 
+<Assembly: AssemblyFileVersion("0.0.0.2")> 

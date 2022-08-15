@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("file ser")> 
 <Assembly: AssemblyCompany("HCALM")> 
 <Assembly: AssemblyProduct("fileser")> 
-<Assembly: AssemblyCopyright("Copyright © HCALM 2017")> 
+<Assembly: AssemblyCopyright("Copyright © HCALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.0.9")> 
-<Assembly: AssemblyFileVersion("0.0.0.9")> 
+<Assembly: AssemblyVersion("0.0.1.0")> 
+<Assembly: AssemblyFileVersion("0.0.1.0")> 

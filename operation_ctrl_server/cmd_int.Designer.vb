@@ -22,6 +22,7 @@ Partial Class cmd_int
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(cmd_int))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Cancel_Button = New System.Windows.Forms.Button()
@@ -82,7 +83,7 @@ Partial Class cmd_int
         '
         Me.combbxic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.combbxic.FormattingEnabled = True
-        Me.combbxic.Items.AddRange(New Object() {"Stop (Stops Client)", "Restart (Restarts Client with Specified Arguments)", "Reset (Resets the Client's connection)", "Exit (Stops Client)", "End (Stops Client)", "DLL (Check if Specified DLL is loaded on Client)", "DLLS (Gets a list of loaded DLLS on Client)", "RDLL (Removes Specified DLL on Client)", "CDLLS (Clears DLLS on Client)", "SERVSTP (Stops the Service)"})
+        Me.combbxic.Items.AddRange(New Object() {"Stop (Stops Client)", "Restart (Restarts Client with Specified Arguments)", "Reset (Resets the Client's connection)", "Exit (Stops Client)", "End (Stops Client)", "DLL (Check if Specified DLL is loaded on Client)", "DLLS (Gets a list of loaded DLLS on Client)", "RDLL (Removes Specified DLL on Client)", "CDLLS (Clears DLLS on Client)", "SERVSTP (Stops the Service)", "THREADS (Gets a List of All Running Threads on Client)", "STHREAD (Stops Specified Thread on Client)", "STHREADS (Stops all Threads on Client)"})
         Me.combbxic.Location = New System.Drawing.Point(115, 50)
         Me.combbxic.Name = "combbxic"
         Me.combbxic.Size = New System.Drawing.Size(305, 21)
@@ -128,6 +129,7 @@ Partial Class cmd_int
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(451, 354)
         Me.MinimizeBox = False

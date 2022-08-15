@@ -33,9 +33,6 @@ Public Class main
                 runtime_thread.Abort()
             End If
             running = False
-            While running
-                Thread.Sleep(100)
-            End While
         End If
     End Sub
 

@@ -34,7 +34,7 @@ Public Class cmd_int
     End Sub
 
     Private Sub combbxic_SelectedIndexChanged(sender As Object, e As EventArgs) Handles combbxic.SelectedIndexChanged
-        If combbxic.SelectedIndex = internal_command_name.Restart Or combbxic.SelectedIndex = internal_command_name.dll Or combbxic.SelectedIndex = internal_command_name.rdll Then
+        If combbxic.SelectedIndex = internal_command_name.Restart Or combbxic.SelectedIndex = internal_command_name.dll Or combbxic.SelectedIndex = internal_command_name.rdll Or combbxic.SelectedIndex = internal_command_name.sthread Then
             txtbxargs.Enabled = True
         Else
             txtbxargs.Enabled = False

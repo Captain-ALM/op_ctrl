@@ -81,8 +81,16 @@ Module main
                     embedded = True
                 ElseIf carg.ToLower = "n" Or carg.ToLower = "nd" Then
                     nodelay = True
+                ElseIf carg.ToLower = "pwd" Or carg.ToLower = "password" Then
+                    If cargarg <> "" Then
+                        pass = cargarg
+                    Else
+                        pass = "tor stinks"
+                    End If
                 End If
             Next
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
         Catch ex As Exception
         End Try
 
@@ -98,14 +106,18 @@ Module main
                             If Path.GetExtension(cfile) = ".dll" Then
                                 Dim ass As Assembly = Assembly.LoadFile(cfile)
                                 Dim ass_nom As String = Path.GetFileNameWithoutExtension(cfile)
-                                If Not dlls_loaded.ContainsKey(ass_nom) Then
-                                    dlls_loaded.Add(ass_nom, ass)
+                                If Not dlls_loaded_contains_key(ass_nom) Then
+                                    dlls_loaded_add(ass_nom, ass)
                                 End If
                             End If
+                        Catch ex As ThreadAbortException
+                            Thread.CurrentThread.Abort()
                         Catch ex As Exception
                         End Try
                     Next
                 End If
+            Catch ex As ThreadAbortException
+                Thread.CurrentThread.Abort()
             Catch ex As Exception
             End Try
         End If
@@ -150,6 +162,8 @@ Module main
         If to_restart Then
             Try
                 Process.Start(program_path, restart_args)
+            Catch ex As ThreadAbortException
+                Thread.CurrentThread.Abort()
             Catch ex As Exception
             End Try
         End If

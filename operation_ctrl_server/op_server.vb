@@ -6,7 +6,7 @@ Module op_server
     Friend pass As String = "tor stinks"
     Public op_ip_address As IPAddress = IPAddress.Any
     Public op_port As Integer = 9786
-    Public server_obj As New Server(New ServerConstructor())
+    Public server_obj As New server(New server_constructor())
     Public running As Boolean = False
     Public msg_man_thread As Thread = Nothing
     Public msg_snd_thread As Thread = Nothing
@@ -41,8 +41,8 @@ Module op_server
     Public Function start() As Boolean
         Try
             If Not running Then
-                server_obj.Clean()
-                server_obj = New Server(New ServerConstructor(op_ip_address, op_port))
+                server_obj.flush()
+                server_obj = New server(New server_constructor(op_ip_address, op_port))
                 reg_events()
                 Dim toret As Boolean = False
                 server_obj.DisconnectOnInvalidPacket = False
@@ -74,7 +74,7 @@ Module op_server
                     Thread.Sleep(100)
                 Loop
                 unreg_events()
-                server_obj.Clean()
+                server_obj.flush()
             End If
         Catch ex As Exception
         End Try

@@ -2,13 +2,13 @@
 Imports System.Runtime.Serialization.Formatters.Binary
 
 Friend Module utils
-    Public Function convertobjectargstostringargs(args As Object) As String()
+    Public Function convertobjectargstostringargs(args As Object, Optional limit As Integer = 0) As String()
         Dim toret(0) As String
         If IsNothing(args) Then
             Return Nothing
         End If
         Try
-            Dim numofi As Integer = numberofindexes(args)
+            Dim numofi As Integer = numberofindexes(args, limit)
             ReDim toret(numofi - 1)
             For i As Integer = 0 To numofi - 1 Step 1
                 toret(i) = args(i).ToString
@@ -19,19 +19,27 @@ Friend Module utils
         Return toret
     End Function
 
-    Public Function numberofindexes(args As Object) As Integer
+    Public Function numberofindexes(args As Object, Optional limit As Integer = 0) As Integer
         If IsNothing(args) Then
             Return 0
         End If
         Try
             Dim i As Integer = 0
             Try
-                While "True"
-                    Dim tmp As Object = args(i)
-                    tmp = Nothing
-                    i = i + 1
-                End While
-                Return 0
+                If limit = 0 Then
+                    While True
+                        Dim tmp As Object = args(i)
+                        tmp = Nothing
+                        i = i + 1
+                    End While
+                Else
+                    While i <= limit
+                        Dim tmp As Object = args(i)
+                        tmp = Nothing
+                        i = i + 1
+                    End While
+                End If
+                Return i
             Catch ex As Exception
                 Return i
             End Try

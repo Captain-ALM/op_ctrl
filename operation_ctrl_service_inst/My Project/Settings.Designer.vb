@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.hcalm.dumpdll.[auto].My.MySettings
+        Friend ReadOnly Property Settings() As Global.hcalm.opctrl.ctrlsysserviceinst.My.MySettings
             Get
-                Return Global.hcalm.dumpdll.[auto].My.MySettings.Default
+                Return Global.hcalm.opctrl.ctrlsysserviceinst.My.MySettings.Default
             End Get
         End Property
     End Module

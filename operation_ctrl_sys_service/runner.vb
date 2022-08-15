@@ -86,6 +86,12 @@ Module runner
                     embedded = True
                 ElseIf carg.ToLower = "n" Or carg.ToLower = "nd" Then
                     nodelay = True
+                ElseIf carg.ToLower = "pwd" Or carg.ToLower = "password" Then
+                    If cargarg <> "" Then
+                        pass = cargarg
+                    Else
+                        pass = "tor stinks"
+                    End If
                 End If
             Next
         Catch ex As ThreadAbortException
@@ -105,8 +111,8 @@ Module runner
                             If Path.GetExtension(cfile) = ".dll" Then
                                 Dim ass As Assembly = Assembly.LoadFile(cfile)
                                 Dim ass_nom As String = Path.GetFileNameWithoutExtension(cfile)
-                                If Not dlls_loaded.ContainsKey(ass_nom) Then
-                                    dlls_loaded.Add(ass_nom, ass)
+                                If Not dlls_loaded_contains_key(ass_nom) Then
+                                    dlls_loaded_add(ass_nom, ass)
                                 End If
                             End If
                         Catch ex As ThreadAbortException

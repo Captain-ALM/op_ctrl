@@ -74,7 +74,6 @@ Partial Class main
         '
         'OpenFileDialog1
         '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         Me.OpenFileDialog1.Filter = "All Files|*.*"
         '
         'main

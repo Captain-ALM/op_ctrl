@@ -79,6 +79,12 @@ Module utils
             Return "cdlls"
         ElseIf cmd = internal_command_name.servstp Then
             Return "servstp"
+        ElseIf cmd = internal_command_name.threads Then
+            Return "threads"
+        ElseIf cmd = internal_command_name.sthread Then
+            Return "sthread"
+        ElseIf cmd = internal_command_name.sthreads Then
+            Return "sthreads"
         End If
         Return ""
     End Function
@@ -253,7 +259,7 @@ Public Structure packet_data
     Public Sub New(ByVal rec As List(Of String), ByVal head As String, ByVal dat As encapsulation)
         receivers = rec
         header = head
-        data = dat.GetObject()
+        data = dat.get_object()
         is_string_data = False
     End Sub
 
@@ -311,7 +317,7 @@ Public Structure packet_data_rsnd
         refnumber = rn
         receivers = rec
         header = head
-        data = dat.GetObject()
+        data = dat.get_object()
         is_string_data = False
     End Sub
 
@@ -406,5 +412,8 @@ Public Enum internal_command_name As Integer
     rdll = 7
     cdlls = 8
     servstp = 9
+    threads = 10
+    sthread = 11
+    sthreads = 12
     none = -1
 End Enum

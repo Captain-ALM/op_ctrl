@@ -22,6 +22,7 @@ Partial Class config
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(config))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.OK_Button = New System.Windows.Forms.Button()
         Me.Cancel_Button = New System.Windows.Forms.Button()
@@ -32,6 +33,8 @@ Partial Class config
         Me.combbxif = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.chkbxbf = New System.Windows.Forms.CheckBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtbxpwd = New System.Windows.Forms.TextBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -43,7 +46,7 @@ Partial Class config
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.OK_Button, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cancel_Button, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(238, 145)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(238, 195)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -134,13 +137,32 @@ Partial Class config
         Me.chkbxbf.TabIndex = 7
         Me.chkbxbf.UseVisualStyleBackColor = True
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(13, 152)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(56, 13)
+        Me.Label5.TabIndex = 8
+        Me.Label5.Text = "Password:"
+        '
+        'txtbxpwd
+        '
+        Me.txtbxpwd.Location = New System.Drawing.Point(113, 149)
+        Me.txtbxpwd.Name = "txtbxpwd"
+        Me.txtbxpwd.Size = New System.Drawing.Size(306, 20)
+        Me.txtbxpwd.TabIndex = 9
+        Me.txtbxpwd.Text = "tor stinks"
+        '
         'config
         '
         Me.AcceptButton = Me.OK_Button
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(434, 186)
+        Me.ClientSize = New System.Drawing.Size(434, 236)
+        Me.Controls.Add(Me.txtbxpwd)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.chkbxbf)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.txtbxport)
@@ -150,10 +172,11 @@ Partial Class config
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(450, 225)
+        Me.MaximumSize = New System.Drawing.Size(450, 275)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(450, 225)
+        Me.MinimumSize = New System.Drawing.Size(450, 275)
         Me.Name = "config"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
@@ -173,5 +196,7 @@ Partial Class config
     Friend WithEvents combbxif As System.Windows.Forms.ComboBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents chkbxbf As System.Windows.Forms.CheckBox
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents txtbxpwd As System.Windows.Forms.TextBox
 
 End Class

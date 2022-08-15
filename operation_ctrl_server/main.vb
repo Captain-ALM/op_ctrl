@@ -24,6 +24,7 @@ Public Class main
             ip_address = configurator.selected_interface
             port = configurator.port
             delay = Not configurator.buffer
+            pass = configurator.pwd
         Else
             Me.Close()
         End If

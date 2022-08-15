@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DUMP DLL : Automatically Dumps LSASS")> 
-<Assembly: AssemblyDescription("DUMP DLL : Automatically Dumps LSASS")> 
+<Assembly: AssemblyTitle("Deploy SPSS")> 
+<Assembly: AssemblyDescription("Deploy SPSS")> 
 <Assembly: AssemblyCompany("HCALM")> 
-<Assembly: AssemblyProduct("dumpdllauto")> 
-<Assembly: AssemblyCopyright("Copyright © HCALM 2019")> 
+<Assembly: AssemblyProduct("operation_ctrl_service_inst")> 
+<Assembly: AssemblyCopyright("Copyright © HCALM 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("693092f3-e632-4f6a-8ced-ee35ae5f099f")> 
+<Assembly: Guid("7889151c-e25a-4dc2-8e35-d1344275756a")> 
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.0.0.4")> 
-<Assembly: AssemblyFileVersion("0.0.0.4")> 
+<Assembly: AssemblyVersion("0.0.1.2")> 
+<Assembly: AssemblyFileVersion("0.0.1.2")> 

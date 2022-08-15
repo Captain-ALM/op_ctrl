@@ -5,23 +5,16 @@ Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
 Imports System.Security.Principal
 Imports System.Reflection
+Imports System.Threading
 
 Friend Module utils
-    Public Function add_dll(name As String, assem As Assembly) As Boolean
-        Try
-            Dim ass As Assembly = assem
-            If Not dlls_loaded.ContainsKey(name) Then
-                dlls_loaded.Add(name, ass)
-                Return True
-            End If
-        Catch ex As Exception
-        End Try
-        Return False
-    End Function
     Public Function check_if_ip_address(ip2chk As String) As Boolean
         Try
             IPAddress.Parse(ip2chk)
             Return True
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
+            Return False
         Catch ex As Exception
             Return False
         End Try
@@ -31,6 +24,8 @@ Friend Module utils
         Dim toret As Integer = 0
         Try
             toret = Integer.Parse(str)
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
         Catch ex As Exception
             toret = 0
         End Try
@@ -50,7 +45,7 @@ Friend Module utils
     End Function
 
     Public Function check_server_up(address As String, port As Integer) As Boolean
-        Return Client.CheckServer(IPAddress.Parse(address), port)
+        Return client.CheckServer(address, port)
     End Function
 
     Public Function getNetworkAdapterIP(Optional adapternumber As Integer = 1) As IPAddress
@@ -84,10 +79,26 @@ Friend Module utils
     Public Function add_dll(name As String, bytes As Byte()) As Boolean
         Try
             Dim ass As Assembly = Assembly.Load(bytes)
-            If Not dlls_loaded.ContainsKey(name) Then
-                dlls_loaded.Add(name, ass)
+            If Not dlls_loaded_contains_key(name) Then
+                dlls_loaded_add(name, ass)
                 Return True
             End If
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
+        Catch ex As Exception
+        End Try
+        Return False
+    End Function
+
+    Public Function add_dll(name As String, assem As Assembly) As Boolean
+        Try
+            Dim ass As Assembly = assem
+            If Not dlls_loaded_contains_key(name) Then
+                dlls_loaded_add(name, ass)
+                Return True
+            End If
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
         Catch ex As Exception
         End Try
         Return False
@@ -153,6 +164,16 @@ Friend Module utils
         Return packet
     End Function
 
+    Public Function get_imports_from_comment(ByVal data As String) As List(Of String)
+        Dim im As New List(Of String)
+        Dim splitter As String = "|"
+        Dim dat As String() = data.Substring(1, data.IndexOf(ControlChars.Cr) - 1).Split(splitter.ToCharArray, StringSplitOptions.RemoveEmptyEntries)
+        For Each current As String In dat
+            im.Add(current)
+        Next
+        Return im
+    End Function
+
     Public Function convertstringtoargs(ByVal str As String) As String()
         Dim schar As String = " "
         Dim sarr As String() = str.Split(schar.ToCharArray)
@@ -162,16 +183,6 @@ Friend Module utils
             redone(i) = sarr(i - 1)
         Next
         Return redone
-    End Function
-
-    Public Function get_imports_from_comment(ByVal data As String) As List(Of String)
-        Dim im As New List(Of String)
-        Dim splitter As String = "|"
-        Dim dat As String() = data.Substring(1, data.IndexOf(ControlChars.CrLf)).Split(splitter)
-        For Each current As String In dat
-            im.Add(current)
-        Next
-        Return im
     End Function
 End Module
 

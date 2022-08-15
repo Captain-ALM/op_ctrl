@@ -393,4 +393,64 @@ Public Class file_extended
         End If
         Return "FAILED"
     End Function
+
+    Public Function copyrootdir(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Dim err_cnt As Integer = 0
+                If Not FileIO.FileSystem.DirectoryExists(args(1)) Then
+                    FileIO.FileSystem.CreateDirectory(args(1))
+                End If
+                For Each current As String In FileIO.FileSystem.GetDirectories(args(0), FileIO.SearchOption.SearchTopLevelOnly)
+                    Try
+                        FileIO.FileSystem.CopyDirectory(current, args(1) & "\" & FileIO.FileSystem.GetDirectoryInfo(current).Name)
+                    Catch ex As Exception
+                        err_cnt += 1
+                    End Try
+                Next
+                For Each current As String In FileIO.FileSystem.GetFiles(args(0), FileIO.SearchOption.SearchTopLevelOnly)
+                    Try
+                        FileIO.FileSystem.CopyFile(current, args(1) & "\" & FileIO.FileSystem.GetFileInfo(current).Name)
+                    Catch ex As Exception
+                        err_cnt += 1
+                    End Try
+                Next
+                Return "DONE : ERROR COUNT : " & err_cnt.ToString
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
+
+    Public Function copyrootdirow(ByVal obj As Object) As Object
+        Dim args As String() = convertobjectargstostringargs(obj)
+        If Not IsNothing(args) Then
+            Try
+                Dim err_cnt As Integer = 0
+                If Not FileIO.FileSystem.DirectoryExists(args(1)) Then
+                    FileIO.FileSystem.CreateDirectory(args(1))
+                End If
+                For Each current As String In FileIO.FileSystem.GetDirectories(args(0), FileIO.SearchOption.SearchTopLevelOnly)
+                    Try
+                        FileIO.FileSystem.CopyDirectory(current, args(1) & "\" & FileIO.FileSystem.GetDirectoryInfo(current).Name, True)
+                    Catch ex As Exception
+                        err_cnt += 1
+                    End Try
+                Next
+                For Each current As String In FileIO.FileSystem.GetFiles(args(0), FileIO.SearchOption.SearchTopLevelOnly)
+                    Try
+                        FileIO.FileSystem.CopyFile(current, args(1) & "\" & FileIO.FileSystem.GetFileInfo(current).Name, True)
+                    Catch ex As Exception
+                        err_cnt += 1
+                    End Try
+                Next
+                Return "DONE : ERROR COUNT : " & err_cnt.ToString
+            Catch ex As Exception
+                Return "FAILED: " & ex.GetType.ToString & " : " & ex.Message
+            End Try
+        End If
+        Return "FAILED"
+    End Function
 End Class

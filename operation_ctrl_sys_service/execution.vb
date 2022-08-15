@@ -4,7 +4,7 @@ Imports System.Threading
 Imports System.Net
 
 Friend Module execution
-    Friend client_obj As New Client(New ClientConstructor)
+    Friend client_obj As New client(New client_constructor)
     Friend client_name As String = getNetworkAdapterIP().ToString & "-" & WindowsIdentity.GetCurrent.User.ToString
     Private packets As New List(Of packet)
     Friend receive_packet_queue As New Queue(Of packet)
@@ -17,21 +17,25 @@ Friend Module execution
         Try
             If Not connected And (client_obj.IsConnected = False Or IsNothing(client_obj)) Then
                 If IsNothing(client_obj) Then
-                    client_obj = New Client(New ClientConstructor)
+                    client_obj = New client(New client_constructor())
                 End If
                 reg_events()
                 client_obj.ClientRefreshDelay = Timeout.Infinite 'stops client refresh
+                client_obj.DisconnectOnInvalidPacket = False
                 Dim toret As Boolean = client_obj.Connect(New ClientStart(IPAddress.Parse(ip_address), port, client_name, New EncryptionParameter(EncryptionMethod.unicodease, pass), 8192, True, nodelay))
                 If toret Then
                     connect_was_called = True
                 End If
                 Return toret
+            Else
+                Return False
             End If
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
+            Return False
         Catch ex As Exception
+            Return False
         End Try
-        Return False
     End Function
 
     Public Function disconnect() As Boolean
@@ -39,6 +43,19 @@ Friend Module execution
             If connect_was_called Or (connected And (client_obj.IsConnected Or Not IsNothing(client_obj))) Then
                 connected = False
                 disconnected_so_timeout = True
+                Try
+                    For Each Val As String In thread_registry_get_keys()
+                        Dim tmp_t As Thread = thread_registry_get(Val)
+                        If tmp_t.IsAlive Then
+                            tmp_t.Abort()
+                        Else
+                            unreg_thread(Val)
+                        End If
+                    Next
+                Catch ex As ThreadAbortException
+                    Thread.CurrentThread.Abort()
+                Catch ex As Exception
+                End Try
                 Try
                     client_obj.Disconnect()
                 Catch ex As ThreadAbortException
@@ -58,21 +75,23 @@ Friend Module execution
                 Catch ex As Exception
                 End Try
                 Try
-                    client_obj.Clean()
+                    client_obj.Flush()
                 Catch ex As ThreadAbortException
                     Thread.CurrentThread.Abort()
                 Catch ex As Exception
                 End Try
                 client_obj = Nothing
-                client_obj = New Client(New ClientConstructor)
+                client_obj = New client(New client_constructor)
                 connect_was_called = False
                 Return True
             End If
+            Return False
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
+            Return False
         Catch ex As Exception
+            Return False
         End Try
-        Return False
     End Function
 
     Function send_packet(p As packet)
@@ -124,6 +143,19 @@ Friend Module execution
         connected = False
         clearpackets()
         Try
+            For Each Val As String In thread_registry_get_keys()
+                Dim tmp_t As Thread = thread_registry_get(Val)
+                If tmp_t.IsAlive Then
+                    tmp_t.Abort()
+                Else
+                    unreg_thread(Val)
+                End If
+            Next
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
+        Catch ex As Exception
+        End Try
+        Try
             unreg_events()
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
@@ -136,20 +168,38 @@ Friend Module execution
         Catch ex As Exception
         End Try
         Try
-            client_obj.Clean()
+            client_obj.Flush()
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
         Catch ex As Exception
         End Try
         client_obj = Nothing
-        client_obj = New Client(New ClientConstructor)
+        client_obj = New client(New client_constructor)
     End Sub
 
-    Sub server_dis2(ByVal r As FailedConnectionReason)
+    Sub server_dis2(ByVal r As failed_connection_reason)
         disconnected_so_timeout = True
         connected = False
         clearpackets()
         Try
+            Try
+                For Each Val As String In thread_registry_get_keys()
+                    Dim tmp_t As Thread = thread_registry_get(Val)
+                    If tmp_t.IsAlive Then
+                        tmp_t.Abort()
+                    Else
+                        unreg_thread(Val)
+                    End If
+                Next
+            Catch ex As ThreadAbortException
+                Thread.CurrentThread.Abort()
+            Catch ex As Exception
+            End Try
+        Catch ex As ThreadAbortException
+            Thread.CurrentThread.Abort()
+        Catch ex As Exception
+        End Try
+        Try
             unreg_events()
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
@@ -162,13 +212,13 @@ Friend Module execution
         Catch ex As Exception
         End Try
         Try
-            client_obj.Clean()
+            client_obj.Flush()
         Catch ex As ThreadAbortException
             Thread.CurrentThread.Abort()
         Catch ex As Exception
         End Try
         client_obj = Nothing
-        client_obj = New Client(New ClientConstructor)
+        client_obj = New client(New client_constructor)
     End Sub
 
     Sub server_msg(p As packet)
